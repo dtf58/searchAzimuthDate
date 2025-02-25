@@ -5,6 +5,7 @@ namespace CppCLRWinFormsProject {
 
     Form1::Form1(void)
     {
+        srch = gcnew Searcher();
         InitializeComponent();
         XmlDocument^ xmlDoc = gcnew XmlDocument();
         try
@@ -25,19 +26,12 @@ namespace CppCLRWinFormsProject {
             {
                 listLocation->SelectedIndex = 0;
             }
-            items = xmlDoc->GetElementsByTagName("StartDate");
+            items = xmlDoc->GetElementsByTagName("StartTimeStamp");
             num = items->Count;
             if (num > 0)
             {
                 XmlNode^ item = items->Item(0);
                 startDate->Text = item->InnerText;
-            }
-            items = xmlDoc->GetElementsByTagName("SearchTime");
-            num = items->Count;
-            if (num > 0)
-            {
-                XmlNode^ item = items->Item(0);
-                searchTime->Text = item->InnerText;
             }
             items = xmlDoc->GetElementsByTagName("SearchAzimuth");
             num = items->Count;
@@ -76,6 +70,12 @@ namespace CppCLRWinFormsProject {
 
     System::Void Form1::Search_Click(System::Object^ sender, System::EventArgs^ e)
     {
+        String^ timeStamp = startDate->Text;
+        String^ objCoord = searchObject->Text;
+        String^ location = listLocation->Text;
+        double sAzi = Convert::ToDouble(searchAzi->Text);
+        String^ receive = srch->runSearch(location,timeStamp,objCoord,sAzi);
+        out_textBox->AppendText(receive);
     }
 
     System::Void Form1::clearResult_Click(System::Object^ sender, System::EventArgs^ e)

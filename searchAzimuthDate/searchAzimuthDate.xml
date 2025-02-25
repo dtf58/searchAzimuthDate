@@ -2,8 +2,7 @@
 <Entries>
    <Location longitude="11.62783" side="E" latitude="50.88868" hemis="N" name="Balkon-HDW8"/>
    <Location longitude="11.62763" side="E" latitude="50.88877" hemis="N" name="Entry-HDW8"/>
-   <StartDate>2025-03-01</StartDate>
-   <SearchTime>22:00</SearchTime>
+   <StartTimeStamp>2025-03-01T22:00:00</StartTimeStamp>
    <SearchAzimuth>120</SearchAzimuth>
    <CelesticalObject RA="20h41m25.92s" DE="45d16m49.27s"/>
 </Entries>   

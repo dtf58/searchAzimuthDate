@@ -1,4 +1,5 @@
 #pragma once
+#include "searcher.h"
 
 namespace CppCLRWinFormsProject {
 
@@ -30,8 +31,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ Location;
 	private: System::Windows::Forms::TextBox^ startDate;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ searchTime;
-	private: System::Windows::Forms::Label^ label2;
+
+
 	private: System::Windows::Forms::TextBox^ searchAzi;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::TextBox^ searchObject;
@@ -39,7 +40,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::Button^ clearResult;
 
-
+	private: Searcher^ srch;
 
 	protected:
 
@@ -64,8 +65,6 @@ namespace CppCLRWinFormsProject {
 			this->Location = (gcnew System::Windows::Forms::Label());
 			this->startDate = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->searchTime = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->searchAzi = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->searchObject = (gcnew System::Windows::Forms::TextBox());
@@ -113,7 +112,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->startDate->Location = System::Drawing::Point(15, 93);
 			this->startDate->Name = L"startDate";
-			this->startDate->Size = System::Drawing::Size(120, 22);
+			this->startDate->Size = System::Drawing::Size(248, 22);
 			this->startDate->TabIndex = 4;
 			// 
 			// label1
@@ -121,25 +120,9 @@ namespace CppCLRWinFormsProject {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(15, 71);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(152, 16);
+			this->label1->Size = System::Drawing::Size(293, 16);
 			this->label1->TabIndex = 5;
-			this->label1->Text = L"Start-Date (yyyy-mm-dd)";
-			// 
-			// searchTime
-			// 
-			this->searchTime->Location = System::Drawing::Point(220, 92);
-			this->searchTime->Name = L"searchTime";
-			this->searchTime->Size = System::Drawing::Size(100, 22);
-			this->searchTime->TabIndex = 6;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(217, 71);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(88, 16);
-			this->label2->TabIndex = 7;
-			this->label2->Text = L"Time (hh:mm)";
+			this->label1->Text = L"Start-Time-Stamp UTC (yyyy-mm-ddThh:mm:ss)";
 			// 
 			// searchAzi
 			// 
@@ -203,8 +186,6 @@ namespace CppCLRWinFormsProject {
 			this->Controls->Add(this->searchObject);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->searchAzi);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->searchTime);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->startDate);
 			this->Controls->Add(this->Location);
