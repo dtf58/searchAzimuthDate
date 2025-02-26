@@ -82,11 +82,14 @@ String^ Searcher::runSearch(String^location,String^ startTimeStamp, String^ objC
 	astroC->convertMjdToDatum(runTimeUTCMjdPrev, jj, mm, dd, hh, mi, ss);
 
 	String^ strReturn = gcnew String("");
+	int iss = timeTest.second_+0.5;
+	if (iss > 59)
+		iss = 0;
 
 	if (i < 366)
 	{
 		strReturn = String::Format("Object: {0}\nAzimuth: {1,8:F1}   Altitude: {2,8:F1}  DateTime: {3,4:0000}-{4,2:00}-{5,2:00} {6,2:00}:{7,2:00}:{8,2:00}\r\n\r\n",
-			objCoord, azimuthPrev, altitudePrev, jj, mm, dd, hh, mi, (int)ss);
+			objCoord, azimuthPrev, altitudePrev, jj, mm, dd, timeTest.hour_, timeTest.minute_, iss);
 	}
 	else
 	{
