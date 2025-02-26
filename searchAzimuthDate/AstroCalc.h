@@ -36,6 +36,7 @@ public:
 	void strOnlyNumbers(char* str, bool positive);
 	void direction2AzAlt(char* direction, double& azimuth, double& altitude, bool hourFlag);
 	void getTimeNow(TimeOwn& timeNow);
+	void convertMjdToDatum(double Mjd, int& Year, int& Month, int& Day, int& Hour, int& Min, double& sec);
 	void matrixProduct(double mat1[3][3], double mat2[3][3], double matOut[3][3]);
 	void PrecMatrix_Equ(double T1, double T2, double m[3][3]);
 	void NutMatrix(double T, double m[3][3]);

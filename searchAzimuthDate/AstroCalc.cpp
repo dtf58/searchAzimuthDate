@@ -126,6 +126,47 @@ void AstroCalc::timeOwnInit(char* timeStamp, TimeOwn& t)
     CalcMjd(t);
 }
 
+void AstroCalc::convertMjdToDatum(double Mjd, int& Year, int& Month, int& Day, int& Hour, int& Min, double& sec)
+{
+    long    a, b, c, d, e, f;
+    double  FracOfDay;
+
+    a = (long)(Mjd + 2400001.0);
+
+    if (a < 2299161) {  // Julianischer Kalender
+        b = 0;
+        c = a + 1524;
+    }
+    else {                // Gregorianischer Kalender
+        b = (long)(((double)a - 1867216.25) / 36524.25);
+        c = a + b - (b / 4) + 1525;
+    }
+
+    d = (long)(((double)c - 122.1) / 365.25);
+    e = 365 * d + d / 4;
+    f = (long)((double)(c - e) / 30.6001);
+
+    Day = c - e - (int)(30.6001 * (double)f);
+    Month = f - 1 - 12 * (f / 14);
+    Year = d - 4715 - ((7 + (Month)) / 10);
+
+    FracOfDay = Mjd - floor(Mjd);
+
+    FracOfDay *= 24.0;
+
+    Hour = (int)FracOfDay;
+
+    FracOfDay -= (double)Hour;
+    FracOfDay *= 60.;
+
+    Min = (int)FracOfDay;
+
+    FracOfDay -= (double)Min;
+
+    sec = FracOfDay * 60.;
+
+}
+
 void AstroCalc::direction2AzAlt(char* direction, double& azimuth, double& altitude, bool hourFlag)
 {
     strOnlyNumbers(direction,false);

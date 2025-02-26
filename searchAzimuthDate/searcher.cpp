@@ -47,20 +47,52 @@ String^ Searcher::runSearch(String^location,String^ startTimeStamp, String^ objC
 	double locLat;
 	convertLocation(location, locLon, locLat);
 
+	double azimuthPrev, altitudePrev;
 	double azimuth, altitude;
 	astroC->raDec2000ToAzAlt(DEG2RAD*ra2000, DEG2RAD*de2000, DEG2RAD*locLon, DEG2RAD*locLat, runTimeUTCMjd, azimuth, altitude);
-
-	azimuth *= RAD2DEG;
-	altitude *= RAD2DEG;
-	azimuth += 180.;
-	if (azimuth > 360.0)
+	azimuthPrev = azimuth*RAD2DEG + 180.;
+	altitudePrev = altitude*RAD2DEG;
+	if (azimuthPrev > 360.0)
 	{
-		azimuth -= 360.;
+		azimuthPrev -= 360.;
 	}
+	double runTimeUTCMjdPrev = runTimeUTCMjd;
+	int i;
+	for (i = 0; i < 366; ++i)
+	{
+		runTimeUTCMjd += 1.0;
+		astroC->raDec2000ToAzAlt(DEG2RAD * ra2000, DEG2RAD * de2000, DEG2RAD * locLon, DEG2RAD * locLat, runTimeUTCMjd, azimuth, altitude);
+		azimuth = azimuth * RAD2DEG + 180.;
+		altitude = altitude * RAD2DEG;
+		if (azimuth > 360.0)
+		{
+			azimuth -= 360.;
+		}
+		if (azimuthPrev <= sAzi && azimuth > sAzi)
+		{
+			break;
+		}
+		azimuthPrev = azimuth;
+		altitudePrev = altitude;
+		runTimeUTCMjdPrev = runTimeUTCMjd;
+	}
+	int jj, mm, dd, hh, mi;
+	double ss;
+
+	astroC->convertMjdToDatum(runTimeUTCMjdPrev, jj, mm, dd, hh, mi, ss);
 
 	String^ strReturn = gcnew String("");
 
-	strReturn = String::Format("Azimuth: {0}   Altitude: {1}\r\n", azimuth, altitude);
+	if (i < 366)
+	{
+		strReturn = String::Format("Object: {0}\nAzimuth: {1,8:F1}   Altitude: {2,8:F1}  DateTime: {3,4:0000}-{4,2:00}-{5,2:00} {6,2:00}:{7,2:00}:{8,2:00}\r\n\r\n",
+			objCoord, azimuthPrev, altitudePrev, jj, mm, dd, hh, mi, (int)ss);
+	}
+	else
+	{
+		strReturn = String::Format("For Object: {0} no azimuth {1,8:F1} found\r\n\r\n", objCoord, sAzi);
+	}
+
 
 	return strReturn;
 }
