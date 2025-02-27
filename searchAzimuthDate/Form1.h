@@ -41,6 +41,10 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Button^ clearResult;
 
 	private: Searcher^ srch;
+	private: System::Windows::Forms::Button^ objTrack;
+	private: System::Windows::Forms::TextBox^ aziRange;
+	private: System::Windows::Forms::Label^ label2;
+
 
 	protected:
 
@@ -71,6 +75,9 @@ namespace CppCLRWinFormsProject {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->clearResult = (gcnew System::Windows::Forms::Button());
+			this->objTrack = (gcnew System::Windows::Forms::Button());
+			this->aziRange = (gcnew System::Windows::Forms::TextBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Search
@@ -88,7 +95,8 @@ namespace CppCLRWinFormsProject {
 			this->out_textBox->Location = System::Drawing::Point(13, 282);
 			this->out_textBox->Multiline = true;
 			this->out_textBox->Name = L"out_textBox";
-			this->out_textBox->Size = System::Drawing::Size(607, 276);
+			this->out_textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+			this->out_textBox->Size = System::Drawing::Size(607, 887);
 			this->out_textBox->TabIndex = 1;
 			// 
 			// listLocation
@@ -167,7 +175,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			// clearResult
 			// 
-			this->clearResult->Location = System::Drawing::Point(500, 592);
+			this->clearResult->Location = System::Drawing::Point(512, 1191);
 			this->clearResult->Name = L"clearResult";
 			this->clearResult->Size = System::Drawing::Size(108, 23);
 			this->clearResult->TabIndex = 13;
@@ -175,11 +183,40 @@ namespace CppCLRWinFormsProject {
 			this->clearResult->UseVisualStyleBackColor = true;
 			this->clearResult->Click += gcnew System::EventHandler(this, &Form1::clearResult_Click);
 			// 
+			// objTrack
+			// 
+			this->objTrack->Location = System::Drawing::Point(182, 220);
+			this->objTrack->Name = L"objTrack";
+			this->objTrack->Size = System::Drawing::Size(126, 23);
+			this->objTrack->TabIndex = 14;
+			this->objTrack->Text = L"Object Track 24h";
+			this->objTrack->UseVisualStyleBackColor = true;
+			this->objTrack->Click += gcnew System::EventHandler(this, &Form1::objTrack_Click);
+			// 
+			// aziRange
+			// 
+			this->aziRange->Location = System::Drawing::Point(552, 93);
+			this->aziRange->Name = L"aziRange";
+			this->aziRange->Size = System::Drawing::Size(100, 22);
+			this->aziRange->TabIndex = 15;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(551, 71);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(69, 16);
+			this->label2->TabIndex = 16;
+			this->label2->Text = L"Azi Range";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(746, 649);
+			this->ClientSize = System::Drawing::Size(746, 1226);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->aziRange);
+			this->Controls->Add(this->objTrack);
 			this->Controls->Add(this->clearResult);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -201,5 +238,6 @@ namespace CppCLRWinFormsProject {
 #pragma endregion
 	private: System::Void Search_Click(System::Object^ sender, System::EventArgs^ e);
     private: System::Void clearResult_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void objTrack_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

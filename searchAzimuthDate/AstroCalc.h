@@ -50,6 +50,7 @@ public:
 	void VelocityEarth(double T, double r[3], double v[3]);
 	void Equ2EclMatrix(double T, double m[3][3]);
 	void Ecl2EquMatrix(double T, double m[3][3]);
+	void CalcMjd(TimeOwn& t);
 
 private:
 	void calcCart(double phi, double theta, double r, double V[3]);
@@ -59,7 +60,6 @@ private:
 	void matrixVecMult(double mat[3][3], double vIn[3], double vOut[3]);
 	void matrixTransposition(double m1[3][3], double m2[3][3]);
 	void calcPolarAngles(double vec[3], double& phi, double& theta, double& r);
-	void CalcMjd(TimeOwn & t);
 	double CalcGast(double timeMjd);
 	double linInterPol(double x, double x0, double x1, double f0, double f1);
 	void KalkPN(double t);

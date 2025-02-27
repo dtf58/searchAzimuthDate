@@ -40,6 +40,13 @@ namespace CppCLRWinFormsProject {
                 XmlNode^ item = items->Item(0);
                 searchAzi->Text = item->InnerText;
             }
+            items = xmlDoc->GetElementsByTagName("AzimuthRange");
+            num = items->Count;
+            if (num > 0)
+            {
+                XmlNode^ item = items->Item(0);
+                aziRange->Text = item->InnerText;
+            }
             items = xmlDoc->GetElementsByTagName("CelesticalObject");
             num = items->Count;
             for (long i = 0; i < num; ++i)
@@ -74,7 +81,18 @@ namespace CppCLRWinFormsProject {
         String^ objCoord = searchObject->Text;
         String^ location = listLocation->Text;
         double sAzi = Convert::ToDouble(searchAzi->Text);
-        String^ receive = srch->runSearch(location,timeStamp,objCoord,sAzi);
+        double aziR = Convert::ToDouble(aziRange->Text);
+        String^ receive = srch->runSearch(location,timeStamp,objCoord,sAzi,aziR);
+        out_textBox->AppendText(receive);
+    }
+
+    System::Void Form1::objTrack_Click(System::Object^ sender, System::EventArgs^ e)
+    {
+        String^ timeStamp = startDate->Text;
+        String^ objCoord = searchObject->Text;
+        String^ location = listLocation->Text;
+        double sAzi = Convert::ToDouble(searchAzi->Text);
+        String^ receive = srch->runTrack(location, timeStamp, objCoord, sAzi);
         out_textBox->AppendText(receive);
     }
 
