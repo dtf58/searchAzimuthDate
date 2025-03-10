@@ -44,6 +44,7 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Button^ objTrack;
 	private: System::Windows::Forms::TextBox^ aziRange;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Button^ objTrack10s;
 
 
 	protected:
@@ -78,6 +79,7 @@ namespace CppCLRWinFormsProject {
 			this->objTrack = (gcnew System::Windows::Forms::Button());
 			this->aziRange = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->objTrack10s = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// Search
@@ -187,7 +189,7 @@ namespace CppCLRWinFormsProject {
 			// 
 			this->objTrack->Location = System::Drawing::Point(182, 220);
 			this->objTrack->Name = L"objTrack";
-			this->objTrack->Size = System::Drawing::Size(126, 23);
+			this->objTrack->Size = System::Drawing::Size(161, 23);
 			this->objTrack->TabIndex = 14;
 			this->objTrack->Text = L"Object Track 24h";
 			this->objTrack->UseVisualStyleBackColor = true;
@@ -209,11 +211,22 @@ namespace CppCLRWinFormsProject {
 			this->label2->TabIndex = 16;
 			this->label2->Text = L"Azi Range";
 			// 
+			// objTrack10s
+			// 
+			this->objTrack10s->Location = System::Drawing::Point(389, 220);
+			this->objTrack10s->Name = L"objTrack10s";
+			this->objTrack10s->Size = System::Drawing::Size(153, 23);
+			this->objTrack10s->TabIndex = 17;
+			this->objTrack10s->Text = L"Object Track 10s";
+			this->objTrack10s->UseVisualStyleBackColor = true;
+			this->objTrack10s->Click += gcnew System::EventHandler(this, &Form1::objTrack10s_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(746, 1226);
+			this->Controls->Add(this->objTrack10s);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->aziRange);
 			this->Controls->Add(this->objTrack);
@@ -239,5 +252,6 @@ namespace CppCLRWinFormsProject {
 	private: System::Void Search_Click(System::Object^ sender, System::EventArgs^ e);
     private: System::Void clearResult_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void objTrack_Click(System::Object^ sender, System::EventArgs^ e);
+    private: System::Void objTrack10s_Click(System::Object^ sender, System::EventArgs^ e);
 };
 }

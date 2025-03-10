@@ -166,6 +166,64 @@ String^ Searcher::runTrack(String^ location, String^ startTimeStamp, String^ obj
 	return strReturn;
 }
 
+String^ Searcher::runTrack10s(String^ location, String^ startTimeStamp, String^ objCoord, double sAzi)
+{
+	char timeStampS[32];
+	char objCoordS[32];
+	string2char(startTimeStamp, timeStampS, sizeof(timeStampS));
+	string2char(objCoord, objCoordS, sizeof(objCoordS));
+
+	TimeOwn timeTest;
+
+	astroC->timeOwnInit(timeStampS, timeTest);
+	astroC->CalcMjd(timeTest);
+	timeTest.second_ = 0;
+	runTimeUTCMjd = timeTest.timeMjd_;
+
+	double ra2000, de2000;
+	astroC->direction2AzAlt(objCoordS, ra2000, de2000, true);
+
+	double locLon;
+	double locLat;
+	convertLocation(location, locLon, locLat);
+
+
+	String^ strReturn = gcnew String("");
+	strReturn += String::Format("Object: {0} \r\n", objCoord);
+
+	int sec = 0;
+	double altStart, altEnd, azmStart, azmEnd;
+	for (int i = 0; i < 10; ++i)
+	{
+		double azimuth, altitude;
+		astroC->raDec2000ToAzAlt(DEG2RAD * ra2000, DEG2RAD * de2000, DEG2RAD * locLon, DEG2RAD * locLat, runTimeUTCMjd, azimuth, altitude);
+		azimuth = azimuth * RAD2DEG + 180.;
+		altitude = altitude * RAD2DEG;
+		if (azimuth > 360.0)
+		{
+			azimuth -= 360.;
+		}
+		if (0 == i)
+		{
+			azmStart = azimuth;
+			altStart = altitude;
+		}
+		azmEnd = azimuth;
+		altEnd = altitude;
+		strReturn += String::Format("{0,4:0000}-{1,2:00}-{2,2:00} ; {3,2:00}:{4,2:00}:{5,2:00} ; {6} ; {7}\r\n",
+			timeTest.year_, timeTest.month_, timeTest.day_, timeTest.hour_, timeTest.minute_, sec, outSplitAngleHour(azimuth, 1., true), outSplitAngleHour(altitude, 1., true));
+		runTimeUTCMjd += 1. / 3600. / 24.;
+		++sec;
+	}
+	double azmDiff = fabs(azmEnd - azmStart);
+	double altDiff = fabs(altEnd-altStart);
+	strReturn += String::Format("Azimuth difference {0}  Altitude difference {1}\r\n", outSplitAngleHour(azmDiff, 1., true), outSplitAngleHour(altDiff, 1., true));
+	double diffTotal = sqrt(azmDiff * azmDiff + altDiff * altDiff);
+	strReturn += String::Format("Diff Angle total {0,12:F3} arcmin\r\n", diffTotal * 60.);
+
+	return strReturn;
+}
+
 void Searcher::convertLocation(String^ locTotal, double& locLon, double& locLat)
 {
 	cli::array<wchar_t>^ sep = { ' ',';' };
@@ -195,3 +253,37 @@ void Searcher::convertLocation(String^ locTotal, double& locLon, double& locLat)
 		locLon = lon;
 	}
  }
+
+String^ Searcher::outSplitAngleHour(double angleHour, double factor, bool degFlag)
+{
+	double haf = angleHour * factor;
+	int sign = 1;
+	if (haf < 0)
+	{
+		haf = -haf;
+		sign = -1;
+	}
+	int ha, min, sec;
+	splitAngle(haf, ha, min, sec);
+	char c = 'h';
+	if (degFlag)
+	{
+		c = 'd';
+	}
+	char buffer[64];
+	sprintf_s(buffer, sizeof(buffer), "%4d%c%02dm%02ds", ha * sign, c, min, sec);
+
+	return gcnew String(buffer);
+}
+
+void Searcher::splitAngle(double angle, int& grd, int& min, int& sec)
+{
+	grd = (int)angle;
+	double h = angle - (double)grd;
+	h *= 60.;
+	min = (int)h;
+	h = h - (double)min;
+	h = h * 60. + 0.5;
+	sec = (int)h;
+}
+

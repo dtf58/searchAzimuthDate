@@ -96,6 +96,16 @@ namespace CppCLRWinFormsProject {
         out_textBox->AppendText(receive);
     }
 
+    System::Void Form1::objTrack10s_Click(System::Object^ sender, System::EventArgs^ e)
+    {
+        String^ timeStamp = startDate->Text;
+        String^ objCoord = searchObject->Text;
+        String^ location = listLocation->Text;
+        double sAzi = Convert::ToDouble(searchAzi->Text);
+        String^ receive = srch->runTrack10s(location, timeStamp, objCoord, sAzi);
+        out_textBox->AppendText(receive);
+    }
+
     System::Void Form1::clearResult_Click(System::Object^ sender, System::EventArgs^ e)
     {
         out_textBox->Clear();
